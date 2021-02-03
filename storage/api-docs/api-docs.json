@@ -1,0 +1,185 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "Code Challenge",
+        "description": "Code-Challenge API",
+        "contact": {
+            "email": "ruchitimilsina27@gmail.com"
+        },
+        "version": "0.0.0"
+    },
+    "paths": {
+        "/": {
+            "get": {
+                "description": "Home page",
+                "responses": {
+                    "default": {
+                        "description": "Welcome page"
+                    }
+                }
+            }
+        },
+        "/api/auth/register": {
+            "post": {
+                "tags": [
+                    "Auth"
+                ],
+                "summary": "Registration",
+                "description": "Returns token",
+                "operationId": "register",
+                "requestBody": {
+                    "description": "User data",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/Register"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "401": {
+                        "description": "invalid credentials"
+                    },
+                    "500": {
+                        "description": "Cannot create token"
+                    }
+                }
+            }
+        },
+        "/api/subscription/inAppPurchaseVerification": {
+            "post": {
+                "tags": [
+                    "Subscription"
+                ],
+                "summary": "In-App Purchase Verification",
+                "description": "Validate receipt and returns expiry date",
+                "operationId": "inAppPurchaseVerification",
+                "requestBody": {
+                    "description": "In app purchase verification",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/InAppPurchaseVerification"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Success"
+                    },
+                    "500": {
+                        "description": "Internal Server Error"
+                    }
+                },
+                "security": [
+                    {
+                        "Bearer": []
+                    }
+                ]
+            }
+        },
+        "/api/subscription/getSubscriptionStatus": {
+            "get": {
+                "tags": [
+                    "Subscription"
+                ],
+                "summary": "Get Subscription Status",
+                "description": "Get User Subscription Status",
+                "operationId": "getSubscriptionStatus",
+                "responses": {
+                    "200": {
+                        "description": "Success"
+                    },
+                    "500": {
+                        "description": "Internal Server Error"
+                    }
+                },
+                "security": [
+                    {
+                        "Bearer": []
+                    }
+                ]
+            }
+        },
+        "/api/subscription/getReport": {
+            "get": {
+                "tags": [
+                    "Subscription"
+                ],
+                "summary": "Get Subscription Report",
+                "description": "Get Subscription Report",
+                "operationId": "getReport",
+                "responses": {
+                    "200": {
+                        "description": "Success"
+                    },
+                    "500": {
+                        "description": "Internal Server Error"
+                    }
+                },
+                "security": [
+                    {
+                        "Bearer": []
+                    }
+                ]
+            }
+        }
+    },
+    "components": {
+        "schemas": {
+            "Register": {
+                "properties": {
+                    "uID": {
+                        "description": "User ID",
+                        "type": "integer",
+                        "default": "1",
+                        "example": "1"
+                    },
+                    "os": {
+                        "description": "os",
+                        "type": "string",
+                        "default": "1 for  ios 2 for android",
+                        "example": "1 for  ios 2 for android"
+                    },
+                    "appID": {
+                        "description": "App ID",
+                        "type": "string",
+                        "default": "token",
+                        "example": "token"
+                    },
+                    "language": {
+                        "description": "Language",
+                        "type": "string",
+                        "default": "eng",
+                        "example": "eng"
+                    }
+                },
+                "type": "object"
+            },
+            "InAppPurchaseVerification": {
+                "properties": {
+                    "receipt_token": {
+                        "description": "Receipt Token",
+                        "type": "string"
+                    }
+                },
+                "type": "object"
+            }
+        },
+        "securitySchemes": {
+            "Bearer": {
+                "type": "apiKey",
+                "description": "Use Bearer token to authorize user",
+                "name": "Authorization",
+                "in": "header"
+            }
+        }
+    },
+    "security": [
+        []
+    ]
+}
